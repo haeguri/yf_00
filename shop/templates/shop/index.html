@@ -1,0 +1,21 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+
+{% if item_list %}
+    <div class="row">
+    {% for item in item_list %}
+        <div class="col-md-3">
+            <p>{{ item.name }}</p>
+        </div>
+        {% if forloop.counter|divisibleby:4 %}
+    </div>
+    <div class="row">
+        {% endif %}
+    {% endfor %}
+    </div>
+{% else %}
+    <p>아이템이 없습니다.</p>
+{% endif %}
+
+{% endblock %}

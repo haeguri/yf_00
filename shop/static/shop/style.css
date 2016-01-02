@@ -1,0 +1,9 @@
+.navbar-default {
+    background-color: #ffffff;
+    border-bottom: solid 2px #B6B6B6;
+}
+
+a.navbar-brand strong{
+    font-size: 20px;
+    color: #06C;
+}

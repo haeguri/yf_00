@@ -1,0 +1,15 @@
+{
+  "name": "fleamarket_00",
+  "version": "0.0.0",
+  "authors": [
+    "Haegyun Jung <haegyun821@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
