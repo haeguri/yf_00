@@ -1,0 +1,45 @@
+{% extends "shop/base.html" %}
+{% load humanize %}
+
+{% block content %}
+{% if item %}
+    <div class="row">
+        <div class="col-md-7 col-xs-12 yu-item-image">
+{#            <div class="">#}
+                <img src="{{ item.photos_of_item.all.0.image.url }}" />
+{#            </div>#}
+        </div>
+        <div class="col-md-5 col-xs-12">
+            <div class="yu-item-right-wrapper">
+                <div class="item-info-title">
+                    <p>{{ item.name }}</p>
+                </div>
+                <div class="item-info-else">
+                    <p>{{ item.purchased_at }}</p>
+                    <p>{{ item.condition }}</p>
+                    <p>{{ item.deal_way }}</p>
+                    <p>{{ item.desc }}</p>
+                    {% if item.deal_way == 'direct' %}
+                        <p>{{ item.deal_place }}</p>
+                    {% endif %}
+                    {% if item.deal_way == 'ship' %}
+                        <p>{{ item.shipping_price }}</p>
+                    {% endif %}
+                    <p>{{ item.price }}</p>
+                </div>
+                <div class="item-buttons">
+                    <button class="btn btn-primary">
+                        구매신청
+                    </button>
+                    <button class="btn btn-default">
+                        담아놓기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p>아이템이 없습니다.</p>
+{% endif %}
+
+{% endblock %}

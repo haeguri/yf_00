@@ -1,7 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import CustomUser
+from .models import CustomUser, Item
+
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
 
 
 class UserCreationForm(forms.ModelForm):

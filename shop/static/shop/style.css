@@ -1,3 +1,15 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+body { font-family: "Nanum Gothic", serif; }
+
+button:focus { outline:0; }
+
+a:hover { text-decoration: none; }
+
+.content.container {
+    background-color: #f9f9f9;
+}
+
 .navbar-default {
     background-color: #ffffff;
     border-bottom: solid 2px #B6B6B6;
@@ -6,4 +18,74 @@
 a.navbar-brand strong{
     font-size: 20px;
     color: #06C;
+}
+
+
+.yu-item {
+    color: inherit;
+    background-color: #ececec;
+    width: 23%;
+    height: 320px;
+    margin: 1% 1% 0 1%;
+    float: left;
+}
+
+.yu-item .yu-thumb-img {
+    background-position: center top;
+    -webkit-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 250px;
+}
+
+.yu-item .yu-thumb-content {
+    padding: 3%;
+}
+
+.yu-item .yu-thumb-price {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.yu-won {
+    font-size: 10px;
+    margin-left: 2px;
+}
+
+.yu-item-image {
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.yu-item-image img {
+    width: 60%;
+    max-height: 400px;
+}
+
+.yu-item-right-wrapper {
+    background-color: #fff;
+    max-height: 400px;
+}
+
+.yu-fixed-btn {
+    position: fixed;
+    right: 23px;
+    bottom: 23px;
+    margin-bottom: 0;
+    z-index: 998;
+}
+
+.yu-circle-btn i {
+    width: 60px;
+    height: 60px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #0066CC;
+    color: #fff;
+    padding-top: 10px;
+    padding-left: 14px;
 }

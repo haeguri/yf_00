@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'shop',
 )
 
@@ -110,3 +111,7 @@ STATICFILES_DIRS = (
 )
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/uploads/'
+
+MEDIA_ROOT = 'uploaded_files'

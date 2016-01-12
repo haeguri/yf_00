@@ -7,6 +7,7 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/dist/css/bootstrap.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'shop/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}"/>
     <script type="text/javascript" src="{% static 'jquery/dist/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
 </head>
@@ -15,7 +16,7 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="{% url 'index' %}">
             <strong>YU 4080</strong>
           </a>
         </div>
@@ -23,7 +24,7 @@
     <div class="brand"></div>
 </nav>
 
-<div class="container">
+<div class="content container">
     {% block content %}
     {% endblock %}
 </div>

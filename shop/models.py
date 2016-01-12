@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField('카테고리 이름', max_length=100)
@@ -9,31 +10,52 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Item(models.Model):
+
+    CONDITION_OF_ITEM = (
+        ('S', 'S'),
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+    )
+
+    WAY_OF_DEAL = (
+        ('direct', '직거래'),
+        ('ship', '택배'),
+        ('delivery', '직접배달')
+    )
+
+    vendor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='판매자')
     category = models.ForeignKey(Category, verbose_name='카테고리')
     name = models.CharField('이름', max_length=200)
     desc = models.TextField('설명', max_length=1000)
     created_at = models.DateTimeField('등록일', auto_now_add=True)
     updated_at = models.DateTimeField('수정일', auto_now=True)
+    price = models.CommaSeparatedIntegerField(max_length=10, default=10000)
+    purchased_at = models.CharField('구입일', max_length=10)
+    deal_way = models.CharField('거래방법', max_length=6,
+                                choices=WAY_OF_DEAL,
+                                default='direct')
+    condition = models.CharField('물품상태', max_length=1,
+                                 choices=CONDITION_OF_ITEM,
+                                 default='B')
+    deal_place = models.CharField('거래장소', max_length=10,
+                                  null=True, blank=True)
+    shipping_price = models.CharField('배송료', max_length=10,
+                                      null=True, blank=True)
+
 
     def __str__(self):
         return self.name
-
-    def delete(self, *args, **kwargs):
-        self.itemphoto_set.all().delete()
-        super(Item, self).delete(*args, **kwargs)
 
 class ItemPhoto(models.Model):
     item = models.ForeignKey(Item, related_name='photos_of_item')
     image = models.ImageField(upload_to='%Y%m%d')
     desc = models.TextField('사진설명', max_length=500)
 
-
-
-
-
-
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        super(ItemPhoto, self).delete(*args, **kwargs)
 
 
 class CustomUserManager(BaseUserManager):
@@ -76,6 +98,18 @@ class CustomUser(AbstractBaseUser):
 
     first_name = models.CharField('성', max_length=20)
     last_name = models.CharField('이름', max_length=20)
+
+    LEVEL_OF_CREDIBILITY = (
+        ('god', '신'),
+        ('platinum', '플래티넘'),
+        ('gold', '골드'),
+        ('silver', '실버'),
+        ('bronze', '브론즈'),
+    )
+
+    credibility = models.CharField(max_length=10,
+                                   choices=LEVEL_OF_CREDIBILITY,
+                                   default='bronze')
 
     joined_at = models.DateTimeField('가입일', auto_now_add=True)
 
