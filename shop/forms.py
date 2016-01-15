@@ -4,10 +4,20 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import CustomUser, Item
 
 
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+
+# # Apply summernote to specific fields.
+# class SomeForm(forms.Form):
+#     foo = forms.CharField(widget=SummernoteWidget())  # instead of forms.Textarea
+
 class ItemForm(forms.ModelForm):
+
     class Meta:
         model = Item
-
+        exclude = ('created_at', 'updated_at', 'category', 'vendor')
+        widgets = {
+            'desc': SummernoteWidget(),
+        }
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required

@@ -2,7 +2,10 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
+from django_summernote import models as summer_models
+from django_summernote import fields as summer_fields
 
 class Category(models.Model):
     name = models.CharField('카테고리 이름', max_length=100)
@@ -11,7 +14,6 @@ class Category(models.Model):
         return self.name
 
 class Item(models.Model):
-
     CONDITION_OF_ITEM = (
         ('S', 'S'),
         ('A', 'A'),
@@ -28,7 +30,6 @@ class Item(models.Model):
     vendor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='판매자')
     category = models.ForeignKey(Category, verbose_name='카테고리')
     name = models.CharField('이름', max_length=200)
-    desc = models.TextField('설명', max_length=1000)
     created_at = models.DateTimeField('등록일', auto_now_add=True)
     updated_at = models.DateTimeField('수정일', auto_now=True)
     price = models.CommaSeparatedIntegerField(max_length=10, default=10000)
@@ -36,6 +37,7 @@ class Item(models.Model):
     deal_way = models.CharField('거래방법', max_length=6,
                                 choices=WAY_OF_DEAL,
                                 default='direct')
+    # desc = models.TextField(max_length=1000)
     condition = models.CharField('물품상태', max_length=1,
                                  choices=CONDITION_OF_ITEM,
                                  default='B')
@@ -43,10 +45,19 @@ class Item(models.Model):
                                   null=True, blank=True)
     shipping_price = models.CharField('배송료', max_length=10,
                                       null=True, blank=True)
+    desc = models.TextField(null = False)
+    # desc = summer_fields.SummernoteTextField()
 
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse_lazy('shop:item_detail', kwargs={'item_id':self.id})
+
+# class ItemDescription(summer_models.Attachment):
+#     item = models.OneToOneField(Item, related_name='desc_of_item')
+#     class_detail = summer_fields.SummernoteTextField()
 
 class ItemPhoto(models.Model):
     item = models.ForeignKey(Item, related_name='photos_of_item')

@@ -3,5 +3,19 @@
 {% block content %}
 <div>
     <p>새로운 아이템 등록</p>
+
+{#    {% for field in item_form %}#}
+{#    <p>#}
+{#        {% if field.errors %}#}
+{#        {{ field.errors }}#}
+{#        {% endif %}#}
+{##}
+{#        {{ field }}#}
+{#    </p>#}
+{#    {% endfor %}#}
+     <form action="{% url 'item_new' %}" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="save btn btn-default" value="중고품 등록"/>
+     </form>
 </div>
 {% endblock %}

@@ -26,27 +26,20 @@ def item_detail(request, item_id):
 def item_new(request):
 
     if request.method == "GET":
-        item_form = ItemForm
+        form = ItemForm()
+
+    elif request.method == "POST":
+        form = ItemForm(request.POST)
+
+        if form.is_valid():
+            new_item = form.save()
+            # new_item.save()
+
+            return render_to_response(new_item.get_absolute_url())
 
     context = {
-        'item ': item_form
+        'form': form
     }
 
-    render_to_response('shop/item_new.html', context)
-    # elif request.method == "POST":
-    #     edit_form = PhotoEditForm(request.POST, request.FILES)
-    #
-    #     if edit_form.is_valid():
-    #         new_photo = edit_form.save(commit=False)
-    #         new_photo.user = request.user
-    #         new_photo.save()
-    #
-    #         return redirect(new_photo.get_absolute_url())
-    #
-    # return render(
-    #     request,
-    #     'new_photo.html',
-    #     {
-    #         'form':edit_form,
-    #     }
-    # )
+    return render(request, 'shop/item_new.html', context)
+    # return render_to_response('shop/item_new.html', context)

@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'shop',
+    'django_summernote',
 )
 
 MIDDLEWARE_CLASSES = (
