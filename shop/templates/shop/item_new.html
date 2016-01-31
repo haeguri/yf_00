@@ -2,20 +2,96 @@
 
 {% block content %}
 <div>
-    <p>새로운 아이템 등록</p>
+    <form action="{% url 'shop:item_new' %}" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <div>{{ form.category }}</div>
+        <div>{{ form.vendor }}</div>
+        <div class="form-group">
+            <label for="yf-input-name" class="col-sm-2 control-label">이름</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" class="form-control" id="yf-input-name" placeholder="어떤 제품인가요?">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="yf-input-purchased_at" class="col-sm-2 control-label">구매시기</label>
+            <div class="col-sm-10">
+              <input type="text" name="purchased_at" class="form-control" id="yf-input-purchased_at" placeholder="구매시기는 언제인가요?">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="yf-input-condition" class="col-sm-2 control-label">물품상태</label>
+            <div class="col-sm-10">
+                <select id="yf-input-condition" name="condition" class="form-control">
+                    <option value="" selected="selected">---------</option>
+                    <option value="S">매우좋음</option>
+                    <option value="A">좋음</option>
+                    <option value="B">보통</option>
+                    <option value="C">안좋음</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="yf-input-deal_way" class="col-sm-2 control-label">거래방법</label>
+            <div class="col-sm-10">
+                <select id="yf-input-deal_way" name="deal_way" class="form-control">
+                    <option value="" selected="selected">---------</option>
+                    <option value="direct">직거래</option>
+                    <option value="ship">택배배송</option>
+                </select>
+            </div>
+        </div>
 
-{#    {% for field in item_form %}#}
-{#    <p>#}
-{#        {% if field.errors %}#}
-{#        {{ field.errors }}#}
-{#        {% endif %}#}
-{##}
-{#        {{ field }}#}
-{#    </p>#}
-{#    {% endfor %}#}
-     <form action="{% url 'item_new' %}" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="save btn btn-default" value="중고품 등록"/>
-     </form>
+        <div class="form-group deal-place" style="display: none;">
+            <label for="yf-input-deal_place" class="col-sm-2 control-label">거래장소</label>
+            <div class="col-sm-10">
+              <input type="text" name="deal_place" class="form-control" id="yf-input-deal_place" placeholder="직거래 장소는 어디인가요?">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="yf-input-price" class="col-sm-2 control-label">판매가격</label>
+            <div class="col-sm-10">
+              <input type="number" name="price" class="form-control" id="yf-input-price" placeholder="얼마에요?">
+            </div>
+        </div>
+
+        <div class="form-group shipping-checkbox" style="display: none">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="include_shipping"> 배송료 포함
+                    </label>
+                </div>
+            </div>
+        </div>
+
+{#        shipping_price #}
+{#        deal_place #}
+        <div class="form-group">
+            <label for="yf-input-price" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+              {{ form.desc }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-default" value="등록하기"/>
+            </div>
+        </div>
+    </form>
 </div>
+<script type="text/javascript">
+    $("#yf-input-deal_way").change(function() {
+        var deal_way = $("#yf-input-deal_way option:selected").val();
+
+        if(deal_way == "ship") {
+            $(".shipping-checkbox").show();
+            $(".deal-place").hide();
+        } else {
+            $(".shipping-checkbox").hide();
+            $(".deal-place").show();
+        }
+    });
+</script>
 {% endblock %}

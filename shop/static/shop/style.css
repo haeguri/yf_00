@@ -1,24 +1,23 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
-body { font-family: "Nanum Gothic", serif; }
+/*body { font-family: "Nanum Gothic", serif; }*/
+
+.container {
+    min-width: 980px !important;
+}
 
 button:focus { outline:0; }
 
-a:hover { text-decoration: none; }
+a:hover, a:hover * { text-decoration: none; color: black;}
+a:link, a:link * { text-decoration: none; color: black;}     /* unvisited link */
+a:visited, a:visited * { text-decoration: none; color: black;}   /* visited link */
+a:active, a:active * { text-decoration: none; color: black;}    /* selected link */
 
-.content.container {
-    background-color: #f9f9f9;
-}
+.content.container { background-color: #f9f9f9; }
 
-.navbar-default {
-    background-color: #ffffff;
-    border-bottom: solid 2px #B6B6B6;
-}
+.navbar-default { background-color: #ffffff; border-bottom: solid 2px #B6B6B6; }
 
-a.navbar-brand strong{
-    font-size: 20px;
-    color: #06C;
-}
+a.navbar-brand strong { font-size: 20px; color: #06C; }
 
 
 .yu-item {

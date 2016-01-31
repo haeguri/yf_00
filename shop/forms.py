@@ -1,10 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth import get_user_model
 
-from .models import CustomUser, Item
+from .models import CustomUser, Item, Category
 
 
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+
+
+User = get_user_model()
 
 # # Apply summernote to specific fields.
 # class SomeForm(forms.Form):
@@ -12,9 +16,17 @@ from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 class ItemForm(forms.ModelForm):
 
+    category = forms.ModelChoiceField(widget=forms.HiddenInput(),
+                                      queryset=Category.objects.all(),
+                                      initial={'category': Category.objects.get(name="판매")})
+
+    vendor = forms.ModelChoiceField(widget=forms.HiddenInput(),
+                                    queryset=User.objects.all(),
+                                    initial={'vendor': User.objects.get(email="admin@admin.com")})
+
     class Meta:
         model = Item
-        exclude = ('created_at', 'updated_at', 'category', 'vendor')
+        exclude = ('created_at', 'updated_at')
         widgets = {
             'desc': SummernoteWidget(),
         }

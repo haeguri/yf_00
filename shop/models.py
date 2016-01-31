@@ -13,6 +13,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
+class ItemManager(models.Manager):
+    pass
+
+
 class Item(models.Model):
     CONDITION_OF_ITEM = (
         ('S', 'S'),
@@ -45,8 +50,11 @@ class Item(models.Model):
                                   null=True, blank=True)
     shipping_price = models.CharField('배송료', max_length=10,
                                       null=True, blank=True)
+    include_shipping = models.BooleanField('배송료포함', default=False, blank=True)
     desc = models.TextField(null = False)
     # desc = summer_fields.SummernoteTextField()
+
+    objects = ItemManager()
 
 
     def __str__(self):
