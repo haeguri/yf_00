@@ -89,6 +89,9 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'shop.CustomUser'
 
+LOGIN_REDIRECT_URL = '/shop/'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 

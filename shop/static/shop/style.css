@@ -51,24 +51,6 @@ a.navbar-brand strong { font-size: 20px; color: #06C; }
     margin-left: 2px;
 }
 
-.yu-item-image {
-    display:table-cell;
-    vertical-align:middle;
-    text-align:center;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-.yu-item-image img {
-    width: 60%;
-    max-height: 400px;
-}
-
-.yu-item-right-wrapper {
-    background-color: #fff;
-    max-height: 400px;
-}
-
 .yu-fixed-btn {
     position: fixed;
     right: 23px;
@@ -87,4 +69,45 @@ a.navbar-brand strong { font-size: 20px; color: #06C; }
     color: #fff;
     padding-top: 10px;
     padding-left: 14px;
+}
+
+.item-wrapper {
+    position: relative;
+}
+
+.item-title {
+    position: relative;
+}
+
+.item-title h3 {
+    max-width: 900px;
+}
+
+.item-title span {
+    position: absolute;
+    top:25px;
+    right:20px;
+}
+
+.item-info-card {
+    position: absolute;
+    right: 20px;
+    width: 220px;
+    padding: 20px;
+    border: solid 2px #a6a6a6;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.item-body {
+    width: 900px;
+}
+
+button img {
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 }

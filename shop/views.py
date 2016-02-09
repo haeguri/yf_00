@@ -9,7 +9,7 @@ User = get_user_model()
 
 # Create your views here.
 def index(request):
-    item_list = Item.objects.all()
+    item_list = Item.objects.order_by('-created_at')[:50]
 
     for item in item_list:
         soup = BeautifulSoup(item.desc, "html.parser")
