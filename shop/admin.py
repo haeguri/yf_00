@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 from .forms import UserChangeForm, UserCreationForm
 from .models import CustomUser, Item, ItemPhoto, Category
@@ -24,11 +27,11 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'first_name', 'last_name', 'joined_at', 'is_admin',)
+    list_display = ('email', 'nickname', 'first_name', 'last_name', 'joined_at', 'is_admin',)
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name',)}),
+        ('Personal info', {'fields': ('nickname', 'first_name', 'last_name',)}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -36,7 +39,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2')}
+            'fields': ('email', 'nickname', 'first_name', 'last_name', 'password1', 'password2')}
         ),
     )
     search_fields = ('email',)

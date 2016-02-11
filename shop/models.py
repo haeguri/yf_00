@@ -115,6 +115,7 @@ class CustomUser(AbstractBaseUser):
         unique=True,
     )
 
+    nickname = models.CharField('별명', max_length=20, unique=True)
     first_name = models.CharField('성', max_length=20)
     last_name = models.CharField('이름', max_length=20)
 
@@ -146,6 +147,9 @@ class CustomUser(AbstractBaseUser):
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
+
+    def get_nickname(self):
+        return self.nickname
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email

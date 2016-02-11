@@ -15,7 +15,7 @@
 
         <div class="item-info-card">
             <div>
-                <span>판매자</span><p>{{ item.vendor }}</p>
+                <span>판매자</span><a href="{% url 'profiles:profile' item.vendor.id %}">{{ item.vendor }}</a>
             </div>
             <div>
                 <span>구매일</span><p>{{ item.purchased_at }}</p>

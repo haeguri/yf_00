@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'shop',
+    'profiles',
     'django_summernote',
 )
 
@@ -89,6 +90,8 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'shop.CustomUser'
 
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
 LOGIN_REDIRECT_URL = '/shop/'
 
 

@@ -2,6 +2,8 @@
 
 /*body { font-family: "Nanum Gothic", serif; }*/
 
+body, html, div.content.container { min-height: 100% }
+
 .container {
     min-width: 980px !important;
 }
@@ -110,4 +112,34 @@ button img {
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
+}
+
+form.login-form{
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form.login-form label {
+    width: 20%;
+    text-align: center;
+}
+
+form.login-form div.login-form-group {
+    margin-bottom: 10px;
+}
+
+form.login-form div.login-form-group input,
+form.login-form div.login-form-group input:active {
+    width: 78%;
+    height: 40px;
+    border-radius: 10px;
+}
+
+input.login-btn {
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 10px;
 }
