@@ -1,11 +1,25 @@
-from django.http import HttpResponse
-from django.shortcuts import render, render_to_response, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render, RequestContext, render_to_response
 from django.contrib.auth import get_user_model
-from bs4 import BeautifulSoup
+from shop.forms import UserCreationForm
 
 User = get_user_model()
 
-# Create your views here.
 def register(request):
-    return render_to_response('register.html', request, {})
+
+    if request.method == "GET":
+        form = UserCreationForm()
+
+        context = { 'form': form, }
+
+        return render_to_response('register.html', RequestContext(request, context))
+
+    elif request.method == "POST":
+        form = UserCreationForm(data=request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('login')
+
+        else:
+            print(form.errors)

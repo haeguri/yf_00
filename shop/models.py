@@ -116,8 +116,6 @@ class CustomUser(AbstractBaseUser):
     )
 
     nickname = models.CharField('별명', max_length=20, unique=True)
-    first_name = models.CharField('성', max_length=20)
-    last_name = models.CharField('이름', max_length=20)
 
     LEVEL_OF_CREDIBILITY = (
         ('god', '신'),

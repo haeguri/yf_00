@@ -2,32 +2,35 @@
 
 {% block content %}
 
-{% if form.errors %}
-<p>ID나 비밀번호가 일치하지 않습니다.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>권한이 없는 페이지에 접근하였으니, 권한이 있는 계정으로 로그인하세요.</p>
-    {% else %}
-    <p>이 페이지를 보려면 로그인을 해야 합니다.</p>
+<div class="login-content-wrapper">
+    {% if form.errors %}
+    <p>ID나 비밀번호가 일치하지 않습니다.</p>
     {% endif %}
-{% endif %}
 
-<form class="login-form" method="post" action="{% url 'login' %}">
-{% csrf_token %}
-    <div class="login-form-group">
-        <label class="test-label" for="yf-input-username">이메일</label>
-        <input type="text" id="yf-input-username" name="username" placeholder="example@domain.com"/>
-    </div>
-    <div class="login-form-group">
-        <label class="test-label" for="yf-input-password">비밀번호</label>
-        <input type="password" id="yf-input-password" name="password" placeholder="패스워드를 입력하세요."/>
-    </div>
+    {% if next %}
+        <div class="yf-alert-box">
+            {% if user.is_authenticated %}
+            <p>권한이 없는 페이지에 접근하였으니, 권한이 있는 계정으로 로그인하세요.</p>
+            {% else %}
+            <p>로그인이 필요한 서비스입니다 ! </p>
+            {% endif %}
+        </div>
+    {% endif %}
+    <form class="login-form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+        <div class="login-form-group">
+            <label class="test-label" for="yf-input-username">이메일</label>
+            <input type="text" id="yf-input-username" name="username" placeholder="example@domain.com"/>
+        </div>
+        <div class="login-form-group">
+            <label class="test-label" for="yf-input-password">비밀번호</label>
+            <input type="password" id="yf-input-password" name="password" placeholder="패스워드를 입력하세요."/>
+        </div>
 
-    <input class="login-btn btn btn-primary" type="submit" value="로그인" />
-    <a href=""></a>
-</form>
+        <input class="login-btn btn btn-primary" type="submit" value="로그인" />
+        <a class="register-btn btn btn-default" href="{% url 'register' %}">3초만에 이메일로 회원가입</a>
+    </form>
+</div>
 
 {#<form>#}
 {#  <div class="form-group">#}

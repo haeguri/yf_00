@@ -114,6 +114,12 @@ button img {
     border-radius: 50%;
 }
 
+div.login-content-wrapper, div.register-content-wrapper {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
 form.login-form{
     width: 350px;
     margin-left: auto;
@@ -136,10 +142,47 @@ form.login-form div.login-form-group input:active {
     border-radius: 10px;
 }
 
-input.login-btn {
-    width: 80px;
+input.login-btn, a.register-btn {
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     display: block;
     margin-bottom: 10px;
 }
+
+div.yf-alert-box {
+    height: 100px;
+}
+
+
+
+form.register-form{
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form.register-form label {
+    width: 25%;
+    text-align: center;
+}
+
+form.register-form div.register-form-group {
+    margin-bottom: 10px;
+}
+
+form.register-form div.register-form-group input,
+form.register-form div.register-form-group input:active {
+    width: 74%;
+    height: 40px;
+    border-radius: 10px;
+}
+
+input.register-btn{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+

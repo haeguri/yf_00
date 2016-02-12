@@ -2,6 +2,47 @@
 
 {% block content %}
 
-<h1>Register 페이지입니다.</h1>
+
+<div class="register-content-wrapper">
+
+    <h3>Register 페이지입니다.</h3>
+
+    {% if form.errors %}
+    <p>ID나 비밀번호가 일치하지 않습니다.</p>
+    {% endif %}
+
+    <form class="register-form" method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div class="register-form-group">
+            <label for="yf-input-email">이메일</label>
+            <input type="text" id="yf-input-email" name="email" placeholder="example@domain.com"/>
+        </div>
+        <div class="register-form-group">
+            <label for="yf-input-nickname">별명</label>
+            <input type="text" id="yf-input-nickname" name="nickname" placeholder="별명을 입력해주세요"/>
+        </div>
+        <div class="register-form-group">
+            <label for="yf-input-password1">비밀번호</label>
+            <input type="password" id="yf-input-password1" name="password1" placeholder="비밀번호"/>
+        </div>
+        <div class="register-form-group">
+            <label for="yf-input-password2">비밀번호 재입력</label>
+            <input type="password" id="yf-input-password2" name="password2" placeholder="비밀번호를 재입력"/>
+        </div>
+
+        <input class="login-btn btn btn-primary" type="submit" value="회원가입" />
+    </form>
+</div>
+
+
+{#<form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">#}
+{#    {% csrf_token %}#}
+{#    {{form.as_p}}#}
+{##}
+{#    <p>#}
+{#        <input type="submit" />#}
+{#    </p>#}
+{#</form>#}
+
 
 {% endblock %}
