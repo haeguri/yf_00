@@ -1,8 +1,11 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from .models import Item, Category
+from django.forms import inlineformset_factory
+
+from .models import Item, Category, ItemPhoto
 from .forms import ItemForm
+
 from bs4 import BeautifulSoup
 
 User = get_user_model()
@@ -40,29 +43,40 @@ def item_detail(request, item_id):
 @login_required
 def item_new(request):
 
-    from django.forms import inlineformset_factory
-    from .models import ItemPhoto
+    ItemPhotoFormSet = inlineformset_factory(Item, ItemPhoto, fields=('image',), can_delete=False, extra=2)
 
     if request.method == "GET":
-
-        item_form = ItemForm()
-        ItemPhotoFormSet = inlineformset_factory(Item, ItemPhoto, fields=('image',), can_delete=False)
 
         item = Item()
         item_photo_formset = ItemPhotoFormSet(instance=item)
 
-    elif request.method == "POST":
-        form = ItemForm(data=request.POST)
+        item_form = ItemForm(initial={'category':Category.objects.get(name="판매")})
 
-        if form.is_valid():
-            new_item = form.save()
+    elif request.method == "POST":
+        item_form = ItemForm(data=request.POST)
+
+        if item_form.is_valid():
+
+            new_item = item_form.save(commit=False)
+            new_item.vendor = request.user
+
+            item_photo_formset = ItemPhotoFormSet(request.POST, instance = new_item)
+
+            if item_photo_formset.is_valid():
+                new_item.save()
+                item_photo_formset.save()
+
+                return redirect(new_item.get_absolute_url())
+
+            else:
+                print(item_photo_formset.errors)
+
             # new_item.vendor = request.user
             # new_item.save()
 
-            return redirect(new_item.get_absolute_url())
-
         else:
-            print(form.errors)
+            print("item_form is_valid is not true")
+            print(item_form.errors)
 
     context = {
         'item_form':item_form,

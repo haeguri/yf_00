@@ -2,8 +2,16 @@
 
 {% block content %}
 
-{{ item_form }}
-{{ item_photo_formset }}
+<form method="post" action="{% url 'shop:item_new' %}">
+    {% csrf_token %}
+
+    <div>{{ item_form.category }}</div>
+    <div>{{ item_form.vendor }}</div>
+    {{ item_form.as_p }}
+    {{ item_photo_formset }}
+
+    <input type="submit" value="등록하기"/>
+</form>
 
 
 {#    {{ item_formset }}#}
@@ -16,8 +24,6 @@
 {#<div>#}
 {#    <form action="{% url 'shop:item_new' %}" method="post" class="form-horizontal">#}
 {#        {% csrf_token %}#}
-{#        <div>{{ form.category }}</div>#}
-{#        <div>{{ form.vendor }}</div>#}
 {#        <div class="form-group">#}
 {#            <label for="yf-input-name" class="col-sm-2 control-label">이름</label>#}
 {#            <div class="col-sm-10">#}

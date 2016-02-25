@@ -34,7 +34,7 @@ class ItemForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        exclude = ('created_at', 'updated_at')
+        exclude = ('created_at', 'updated_at', 'desc', )
         widgets = {
             'desc': SummernoteWidget(),
         }
