@@ -40,8 +40,16 @@ def item_detail(request, item_id):
 @login_required
 def item_new(request):
 
+    from django.forms import inlineformset_factory
+    from .models import ItemPhoto
+
     if request.method == "GET":
-        form = ItemForm(initial={'category':Category.objects.get(name="판매"), 'vendor':request.user})
+
+        item_form = ItemForm()
+        ItemPhotoFormSet = inlineformset_factory(Item, ItemPhoto, fields=('image',), can_delete=False)
+
+        item = Item()
+        item_photo_formset = ItemPhotoFormSet(instance=item)
 
     elif request.method == "POST":
         form = ItemForm(data=request.POST)
@@ -57,7 +65,8 @@ def item_new(request):
             print(form.errors)
 
     context = {
-        'form': form,
+        'item_form':item_form,
+        'item_photo_formset':item_photo_formset,
         'vendor':User.objects.get(email="admin@admin.com"),
         'category':Category.objects.get(name="판매"),
         'user': request.user

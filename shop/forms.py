@@ -1,8 +1,9 @@
 from django import forms
+from django.forms.formsets import BaseFormSet
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
 
-from .models import CustomUser, Item, Category
+from .models import CustomUser, Item, Category, ItemPhoto
 
 
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
@@ -13,6 +14,13 @@ User = get_user_model()
 # # Apply summernote to specific fields.
 # class SomeForm(forms.Form):
 #     foo = forms.CharField(widget=SummernoteWidget())  # instead of forms.Textarea
+
+
+class ItemPhotoForm(forms.ModelForm):
+
+    class Meta:
+        model = ItemPhoto
+        exclude = ('item',)
 
 class ItemForm(forms.ModelForm):
 
@@ -30,6 +38,8 @@ class ItemForm(forms.ModelForm):
         widgets = {
             'desc': SummernoteWidget(),
         }
+
+
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -74,3 +84,7 @@ class UserChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
+# class ItemPhotoFormset(BaseFormSet):
+#
+#

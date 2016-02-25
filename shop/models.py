@@ -63,14 +63,9 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('shop:item_detail', kwargs={'item_id':self.id})
 
-# class ItemDescription(summer_models.Attachment):
-#     item = models.OneToOneField(Item, related_name='desc_of_item')
-#     class_detail = summer_fields.SummernoteTextField()
-
 class ItemPhoto(models.Model):
     item = models.ForeignKey(Item, related_name='photos_of_item')
     image = models.ImageField(upload_to='%Y%m%d')
-    desc = models.TextField('사진설명', max_length=500)
 
     def delete(self, *args, **kwargs):
         self.image.delete()

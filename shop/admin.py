@@ -11,10 +11,10 @@ from .models import CustomUser, Item, ItemPhoto, Category
 
 class ItemPhotoInline(admin.TabularInline):
     model = ItemPhoto
-    extra = 3
+    extra = 10
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'desc', 'created_at', 'updated_at',)
+    list_display = ('name', 'desc', 'created_at', 'updated_at')
     # list_display = ('name', 'created_at', 'updated_at',)
     inlines = [ItemPhotoInline]
 
