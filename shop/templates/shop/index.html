@@ -7,7 +7,7 @@
     <div class="yu-item-list">
         {% for item in item_list %}
             <a class="yu-item" href="{% url 'shop:item_detail' item.pk %}">
-                <div class="yu-thumb-img" style="background-image: url('{{ item.img_url }}')">
+                <div class="yu-thumb-img" style="background-image: url('{{ item.item_photo_set.all.0 }}')">
                 </div>
                 <div class="yu-thumb-content">
                     <span class="yu-thumb-name"> {{ item.name }} </span> <br/>

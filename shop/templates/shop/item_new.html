@@ -2,7 +2,11 @@
 
 {% block content %}
 
-<form method="post" action="{% url 'shop:item_new' %}">
+{% if item_photo_formset.err %}
+
+{% endif %}
+
+<form method="post" action="{% url 'shop:item_new' %}" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div>{{ item_form.category }}</div>

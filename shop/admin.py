@@ -11,6 +11,7 @@ from .models import CustomUser, Item, ItemPhoto, Category
 
 class ItemPhotoInline(admin.TabularInline):
     model = ItemPhoto
+    fields = ('image',)
     extra = 10
 
 class ItemAdmin(admin.ModelAdmin):

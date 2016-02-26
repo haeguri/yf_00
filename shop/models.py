@@ -51,8 +51,7 @@ class Item(models.Model):
     shipping_price = models.CharField('배송료', max_length=10,
                                       null=True, blank=True)
     include_shipping = models.BooleanField('배송료포함', default=False, blank=True)
-    desc = models.TextField(null = False)
-    # desc = summer_fields.SummernoteTextField()
+    desc = models.TextField(null = False, max_length=1000)
 
     objects = ItemManager()
 

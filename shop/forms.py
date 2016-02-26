@@ -25,19 +25,14 @@ class ItemPhotoForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
 
     category = forms.ModelChoiceField(widget=forms.HiddenInput(),
-                                      queryset=Category.objects.all(),
-                                      initial={'category': Category.objects.get(name="판매")})
+                                          queryset=Category.objects.all())
 
     vendor = forms.ModelChoiceField(widget=forms.HiddenInput(),
-                                    queryset=User.objects.all(),
-                                    initial={'vendor': User.objects.get(email="admin@admin.com")})
+                                    queryset=User.objects.all())
 
     class Meta:
         model = Item
-        exclude = ('created_at', 'updated_at', 'desc', )
-        widgets = {
-            'desc': SummernoteWidget(),
-        }
+        exclude = ('created_at', 'updated_at', )
 
 
 
