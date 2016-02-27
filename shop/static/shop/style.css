@@ -12,7 +12,11 @@ button:focus { outline:0; }
 a:hover, a:hover * { text-decoration: none; color: black;}
 a:link, a:link * { text-decoration: none; color: black;}     /* unvisited link */
 a:visited, a:visited * { text-decoration: none; color: black;}   /* visited link */
-a:active, a:active * { text-decoration: none; color: black;}    /* selected link */
+a:active, a:active *, { text-decoration: none; color: black;}    /* selected link */
+
+input {
+    outline: none;
+}
 
 .content.container { background-color: #f9f9f9; }
 
@@ -153,8 +157,6 @@ div.yf-alert-box {
     height: 100px;
 }
 
-
-
 form.register-form{
     width: 400px;
     margin-left: auto;
@@ -189,8 +191,52 @@ input.register-btn{
     display: inline-block;
 }
 
-form .yf-input {
-    margin-bottom: 20px;
+.item-form-wrapper {
+    border: 1px solid #555555;
+    padding: 50px 100px 50px 100px;
+    /*padding-left: 100px;*/
+    /*padding-right: 100px;*/
 }
+
+
+form .yf-input input[type="text"], form .yf-input textarea {
+    width: 500px;
+    padding: 5px;
+}
+
+form .yf-input label{
+    width: 150px;
+    padding-left: 20px;
+}
+
+form .yf-error-msg {
+    height: 20px;
+    padding-left: 170px;
+}
+
+form .yf-error-msg li {
+    list-style: none;
+    font-size: 12px;
+}
+
+form .yf-error-msg ul {
+    padding: 0;
+}
+
+form .yf-input label {
+    font-weight: normal;
+    color: #5a5a5a;
+
+}
+
+form .yf-input.desc *{
+    vertical-align: top;
+}
+
+form .yf-radio label {
+    color: #000000;
+}
+
+
 
 

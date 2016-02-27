@@ -16,7 +16,6 @@ User = get_user_model()
 # class SomeForm(forms.Form):
 #     foo = forms.CharField(widget=SummernoteWidget())  # instead of forms.Textarea
 
-
 class ItemPhotoForm(forms.ModelForm):
 
     class Meta:
@@ -34,6 +33,15 @@ class ItemForm(forms.ModelForm):
     deal_way = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=WAY_OF_DEAL)
 
     condition = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=CONDITION_OF_ITEM)
+
+    def __init__(self, *args, **kwargs):
+        super(ItemForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {
+                'required': '입력된 값이 없습니다.',
+                'invalid': '잘못된 입력값 입니다.'
+            }
 
     class Meta:
         model = Item

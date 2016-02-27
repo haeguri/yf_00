@@ -2,162 +2,108 @@
 
 {% block content %}
 
-{{ form.non_field_errors }}
+<div class="item-form-wrapper">
+    <form method="post" action="{% url 'shop:item_new' %}" enctype="multipart/form-data">
+        {% csrf_token %}
 
-<form method="post" action="{% url 'shop:item_new' %}" enctype="multipart/form-data">
-    {% csrf_token %}
+        <div>{{ item_form.category }}</div>
+        <div>{{ item_form.vendor }}</div>
 
-    <div>{{ item_form.category }}</div>
-    <div>{{ item_form.vendor }}</div>
 
-    <div class="yf-input">
-        <label for="{{ item_form.name.id_for_label }}">상품이름</label>
-        {{ item_form.name }}
-        <div class="yf-error-msg">
-            {% if item_form.name.errors %}
-
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="yf-input">
-        <label for="{{ item_form.price.id_for_label }}">가격</label>
-        {{ item_form.price }}
-    </div>
-
-    <div class="yf-input">
-        <label for="{{ item_form.purchased_at.id_for_label }}">구매시기</label>
-        {{ item_form.purchased_at }}
-    </div>
-
-    <div class="yf-input">
-        <label for="{{ item_form.deal_way.id_for_label }}">거래방법</label>
-        {% for radio in item_form.deal_way %}
-            <div class="yf-radio">
-                {{ radio }}
-            </div>
-        {% endfor %}
-    </div>
-
-    <div class="yf-input">
-        <label for="{{ item_form.condition.id_for_label }}">옷 상태</label>
-        {% for radio in item_form.condition %}
-            <div class="yf-radio">
-                {{ radio }}
-            </div>
-        {% endfor %}
-    </div>
-
-    <div class="yf-input">
-        <label for="{{ item_form.deal_place.id_for_label }}">거래장소</label>
-        {{ item_form.deal_place }}
-    </div>
-
-    <div class="yf-input">
-        <label for="{{ item_form.shipping_price.id_for_label }}">배송비</label>
-        {{ item_form.shipping_price }}
-    </div>
-
-    <div class="yf-input">
-        <label for="{{ item_form.include_shipping.id_for_label }}">배송비포함</label>
-        {{ item_form.include_shipping }}
-    </div>
-
-    <div class="yf-input">
-        <label>이미지</label>
         {{ item_photo_formset.management_form }}
-        {% for photo_form in item_photo_formset %}
-            <div class="photo-formset">
-                {{ photo_form.image }}
+        <div class="yf-input">
+            <label>이미지</label>
+            {% for photo_form in item_photo_formset %}
+                <div class="photo-formset">
+                    {{ photo_form.image }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="yf-input">
+            <label for="{{ item_form.name.id_for_label }}">상품이름</label>
+            {{ item_form.name }}
+            <div class="yf-error-msg">
+                {{ item_form.name.errors }}
             </div>
-        {% endfor %}
-    </div>
+        </div>
 
-    <div class="yf-input">
-        <label for="{{ item_form.desc.id_for_label }}">설명</label>
-        {{ item_form.desc }}
-    </div>
+        <div class="yf-input">
+            <label for="{{ item_form.price.id_for_label }}">가격</label>
+            {{ item_form.price }}
+            <div class="yf-error-msg">
+                {{ item_form.price.errors }}
+            </div>
+        </div>
 
-    <input type="submit" value="등록하기"/>
-</form>
+        <div class="yf-input">
+            <label for="{{ item_form.purchased_at.id_for_label }}">구매시기</label>
+            {{ item_form.purchased_at }}
+            <div class="yf-error-msg">
+                {{ item_form.purchased_at.errors }}
+            </div>
+        </div>
 
+        <div class="yf-input">
+            <label for="{{ item_form.deal_way.id_for_label }}">거래방법</label>
+            {% for radio in item_form.deal_way %}
+                <div class="yf-radio">
+                    {{ radio }}
+                </div>
+            {% endfor %}
+            <div class="yf-error-msg">
+                {{ item_form.deal_way.errors }}
+            </div>
+        </div>
 
+        <div class="yf-input">
+            <label for="{{ item_form.condition.id_for_label }}">옷 상태</label>
+            {% for radio in item_form.condition %}
+                <div class="yf-radio">
+                    {{ radio }}
+                </div>
+            {% endfor %}
+            <div class="yf-error-msg">
+                {{ item_form.condition.errors }}
+            </div>
+        </div>
 
-{#<div>#}
-{#    <form action="{% url 'shop:item_new' %}" method="post" class="form-horizontal">#}
-{#        {% csrf_token %}#}
-{#        <div class="form-group">#}
-{#            <label for="yf-input-name" class="col-sm-2 control-label">이름</label>#}
-{#            <div class="col-sm-10">#}
-{#              <input type="text" name="name" class="form-control" id="yf-input-name" placeholder="어떤 제품인가요?">#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            <label for="yf-input-purchased_at" class="col-sm-2 control-label">구매시기</label>#}
-{#            <div class="col-sm-10">#}
-{#              <input type="text" name="purchased_at" class="form-control" id="yf-input-purchased_at" placeholder="구매시기는 언제인가요?">#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            <label for="yf-input-condition" class="col-sm-2 control-label">물품상태</label>#}
-{#            <div class="col-sm-10">#}
-{#                <select id="yf-input-condition" name="condition" class="form-control">#}
-{#                    <option value="" selected="selected">---------</option>#}
-{#                    <option value="S">매우좋음</option>#}
-{#                    <option value="A">좋음</option>#}
-{#                    <option value="B">보통</option>#}
-{#                    <option value="C">안좋음</option>#}
-{#                </select>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            <label for="yf-input-deal_way" class="col-sm-2 control-label">거래방법</label>#}
-{#            <div class="col-sm-10">#}
-{#                <select id="yf-input-deal_way" name="deal_way" class="form-control">#}
-{#                    <option value="" selected="selected">---------</option>#}
-{#                    <option value="direct">직거래</option>#}
-{#                    <option value="ship">택배배송</option>#}
-{#                </select>#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#        <div class="form-group deal-place" style="display: none;">#}
-{#            <label for="yf-input-deal_place" class="col-sm-2 control-label">거래장소</label>#}
-{#            <div class="col-sm-10">#}
-{#              <input type="text" name="deal_place" class="form-control" id="yf-input-deal_place" placeholder="직거래 장소는 어디인가요?">#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#        <div class="form-group">#}
-{#            <label for="yf-input-price" class="col-sm-2 control-label">판매가격</label>#}
-{#            <div class="col-sm-10">#}
-{#              <input type="number" name="price" class="form-control" id="yf-input-price" placeholder="얼마에요?">#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#        <div class="form-group shipping-checkbox" style="display: none">#}
-{#            <div class="col-sm-offset-2 col-sm-10">#}
-{#                <div class="checkbox">#}
-{#                    <label>#}
-{#                        <input type="checkbox" name="include_shipping"> 배송료 포함#}
-{#                    </label>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            <label for="yf-input-price" class="col-sm-2 control-label"></label>#}
-{#            <div class="col-sm-10">#}
-{#              {{ form.desc }}#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#        <div class="form-group">#}
-{#            <div class="col-sm-offset-2 col-sm-10">#}
-{#                <input type="submit" class="btn btn-primary" value="등록하기"/>#}
-{#            </div>#}
-{#        </div>#}
-{#    </form>#}
-{#</div>#}
+        <div class="yf-input">
+            <label for="{{ item_form.deal_place.id_for_label }}">거래장소</label>
+            {{ item_form.deal_place }}
+            <div class="yf-error-msg">
+                {{ item_form.deal_place.errors }}
+            </div>
+        </div>
+
+        <div class="yf-input">
+            <label for="{{ item_form.shipping_price.id_for_label }}">배송비</label>
+            {{ item_form.shipping_price }}
+            <div class="yf-error-msg">
+                {{ item_form.shipping_price.errors }}
+            </div>
+        </div>
+
+        <div class="yf-input">
+            <label for="{{ item_form.include_shipping.id_for_label }}">배송비포함</label>
+            {{ item_form.include_shipping }}
+            <div class="yf-error-msg">
+                {{ item_form.include_shipping.errors }}
+            </div>
+        </div>
+
+        <div class="yf-input desc">
+            <label for="{{ item_form.desc.id_for_label }}">설명</label>
+            {{ item_form.desc }}
+            <div class="yf-error-msg">
+                {{ item_form.desc.errors }}
+            </div>
+        </div>
+
+        <input type="submit" value="등록하기"/>
+    </form>
+</div>
+
 {#<script type="text/javascript">#}
 {#    $("#yf-input-deal_way").change(function() {#}
 {#        var deal_way = $("#yf-input-deal_way option:selected").val();#}

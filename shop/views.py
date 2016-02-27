@@ -94,7 +94,7 @@ def item_new(request):
 
         else:
             print("item_form is_valid is not true")
-            # print(item_form.errors)
+            print(item_form.errors)
 
     context = {
         'item_form': item_form,
