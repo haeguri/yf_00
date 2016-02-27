@@ -4,6 +4,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
 
 from .models import CustomUser, Item, Category, ItemPhoto
+from .models import CONDITION_OF_ITEM, WAY_OF_DEAL
 
 
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
@@ -29,6 +30,10 @@ class ItemForm(forms.ModelForm):
 
     vendor = forms.ModelChoiceField(widget=forms.HiddenInput(),
                                     queryset=User.objects.all())
+
+    deal_way = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=WAY_OF_DEAL)
+
+    condition = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=CONDITION_OF_ITEM)
 
     class Meta:
         model = Item

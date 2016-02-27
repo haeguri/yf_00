@@ -2,26 +2,84 @@
 
 {% block content %}
 
-{% if item_photo_formset.err %}
-
-{% endif %}
+{{ form.non_field_errors }}
 
 <form method="post" action="{% url 'shop:item_new' %}" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div>{{ item_form.category }}</div>
     <div>{{ item_form.vendor }}</div>
-    {{ item_form.as_p }}
-    {{ item_photo_formset }}
+
+    <div class="yf-input">
+        <label for="{{ item_form.name.id_for_label }}">상품이름</label>
+        {{ item_form.name }}
+        <div class="yf-error-msg">
+            {% if item_form.name.errors %}
+
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.price.id_for_label }}">가격</label>
+        {{ item_form.price }}
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.purchased_at.id_for_label }}">구매시기</label>
+        {{ item_form.purchased_at }}
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.deal_way.id_for_label }}">거래방법</label>
+        {% for radio in item_form.deal_way %}
+            <div class="yf-radio">
+                {{ radio }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.condition.id_for_label }}">옷 상태</label>
+        {% for radio in item_form.condition %}
+            <div class="yf-radio">
+                {{ radio }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.deal_place.id_for_label }}">거래장소</label>
+        {{ item_form.deal_place }}
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.shipping_price.id_for_label }}">배송비</label>
+        {{ item_form.shipping_price }}
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.include_shipping.id_for_label }}">배송비포함</label>
+        {{ item_form.include_shipping }}
+    </div>
+
+    <div class="yf-input">
+        <label>이미지</label>
+        {{ item_photo_formset.management_form }}
+        {% for photo_form in item_photo_formset %}
+            <div class="photo-formset">
+                {{ photo_form.image }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="yf-input">
+        <label for="{{ item_form.desc.id_for_label }}">설명</label>
+        {{ item_form.desc }}
+    </div>
 
     <input type="submit" value="등록하기"/>
 </form>
-
-
-{#    {{ item_formset }}#}
-
-{#    {{ item_photo_formset }}#}
-
 
 
 

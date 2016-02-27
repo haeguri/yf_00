@@ -57,14 +57,18 @@ def item_new(request):
             'shipping_price': "3000",
             'desc': "이것은 설명입니다.",
             'deal_place': "우리집",
+            'deal_way': "direct",
+            'condition': "S"
         }
 
         item_form = ItemForm(initial=initial_data)
         item = Item()
         item_photo_formset = ItemPhotoFormSet(instance=item)
 
-    elif request.method == "POST":
+    if request.method == "POST":
         item_form = ItemForm(data=request.POST)
+        item = Item()
+        item_photo_formset = ItemPhotoFormSet(instance=item)
 
         if item_form.is_valid():
 
@@ -80,7 +84,6 @@ def item_new(request):
                 new_item.save()
                 item_photo_formset.save()
 
-
                 return redirect(new_item.get_absolute_url())
 
             else:
@@ -91,13 +94,13 @@ def item_new(request):
 
         else:
             print("item_form is_valid is not true")
-            print(item_form.errors)
+            # print(item_form.errors)
 
     context = {
-        'item_form':item_form,
-        'item_photo_formset':item_photo_formset,
-        'vendor':User.objects.get(email="admin@admin.com"),
-        'category':Category.objects.get(name="판매"),
+        'item_form': item_form,
+        'item_photo_formset': item_photo_formset,
+        'vendor': User.objects.get(email="admin@admin.com"),
+        'category': Category.objects.get(name="판매"),
         'user': request.user
     }
 

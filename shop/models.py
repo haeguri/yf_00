@@ -7,6 +7,19 @@ from django.conf import settings
 from django_summernote import models as summer_models
 from django_summernote import fields as summer_fields
 
+CONDITION_OF_ITEM = (
+    ('S', '박스 미개봉'),
+    ('A', '거의 새것'),
+    ('B', '사용감 있음'),
+    ('C', '오래됨'),
+)
+
+WAY_OF_DEAL = (
+    ('direct', '직거래'),
+    ('ship', '택배'),
+    ('delivery', '직접배달')
+)
+
 class Category(models.Model):
     name = models.CharField('카테고리 이름', max_length=100)
 
@@ -19,18 +32,6 @@ class ItemManager(models.Manager):
 
 
 class Item(models.Model):
-    CONDITION_OF_ITEM = (
-        ('S', 'S'),
-        ('A', 'A'),
-        ('B', 'B'),
-        ('C', 'C'),
-    )
-
-    WAY_OF_DEAL = (
-        ('direct', '직거래'),
-        ('ship', '택배'),
-        ('delivery', '직접배달')
-    )
 
     vendor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='판매자')
     category = models.ForeignKey(Category, verbose_name='카테고리')

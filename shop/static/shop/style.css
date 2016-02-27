@@ -1,12 +1,11 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 /*body { font-family: "Nanum Gothic", serif; }*/
+html, body { height:100%; background-color: #f9f9f9; }
 
-body, html, div.content.container { min-height: 100% }
+div.content.container { min-height: 100%; }
 
-.container {
-    min-width: 980px !important;
-}
+.container { min-width: 980px !important; }
 
 button:focus { outline:0; }
 
@@ -185,4 +184,13 @@ input.register-btn{
     display: block;
     margin-bottom: 10px;
 }
+
+.yf-radio {
+    display: inline-block;
+}
+
+form .yf-input {
+    margin-bottom: 20px;
+}
+
 
