@@ -2,17 +2,31 @@
 
 {% block content %}
 
-<div class="item-form-wrapper">
+<div class="item-form-container">
+
+    <h3>물품등록</h3>
+
+    <hr/>
+
     <form method="post" action="{% url 'shop:item_new' %}" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div>{{ item_form.category }}</div>
         <div>{{ item_form.vendor }}</div>
 
-
         {{ item_photo_formset.management_form }}
-        <div class="yf-input">
-            <label>이미지</label>
+        <div class="yf-input img-upload">
+{#            <label>이미지</label>#}
+            <div class="yf-imgs-container">
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+            </div>
             {% for photo_form in item_photo_formset %}
                 <div class="photo-formset">
                     {{ photo_form.image }}
@@ -100,7 +114,14 @@
             </div>
         </div>
 
-        <input type="submit" value="등록하기"/>
+        <hr/>
+
+        <div class="yf-input-btns">
+            <input class="" type="submit" value="등록하기"/>
+{#            <button class="">취소</button>#}
+            <a href="{{request.META.HTTP_REFERER}}">취소</a>
+        </div>
+
     </form>
 </div>
 

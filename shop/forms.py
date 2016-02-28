@@ -39,8 +39,8 @@ class ItemForm(forms.ModelForm):
 
         for field in self.fields.values():
             field.error_messages = {
-                'required': '입력된 값이 없습니다.',
-                'invalid': '잘못된 입력값 입니다.'
+                'required': '*입력된 값이 없습니다.',
+                'invalid': '*잘못된 입력값 입니다.'
             }
 
     class Meta:

@@ -45,7 +45,7 @@ def item_detail(request, item_id):
 @login_required
 def item_new(request):
 
-    ItemPhotoFormSet = inlineformset_factory(Item, ItemPhoto, fields=('image',), can_delete=False, extra=2)
+    ItemPhotoFormSet = inlineformset_factory(Item, ItemPhoto, fields=('image',), can_delete=False, extra=8)
 
     if request.method == "GET":
 

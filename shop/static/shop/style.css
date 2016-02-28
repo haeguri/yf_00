@@ -14,6 +14,10 @@ a:link, a:link * { text-decoration: none; color: black;}     /* unvisited link *
 a:visited, a:visited * { text-decoration: none; color: black;}   /* visited link */
 a:active, a:active *, { text-decoration: none; color: black;}    /* selected link */
 
+hr {
+    border-color: #cccccc;
+}
+
 input {
     outline: none;
 }
@@ -189,11 +193,16 @@ input.register-btn{
 
 .yf-radio {
     display: inline-block;
+    width: 100px;
 }
 
-.item-form-wrapper {
-    border: 1px solid #555555;
-    padding: 50px 100px 50px 100px;
+.yf-radio label {
+    font-size: 12px;
+}
+
+.item-form-container {
+    border: 1px solid #cccccc;
+    padding: 50px 100px 100px 100px;
     /*padding-left: 100px;*/
     /*padding-right: 100px;*/
 }
@@ -217,6 +226,7 @@ form .yf-error-msg {
 form .yf-error-msg li {
     list-style: none;
     font-size: 12px;
+    color: #b30000;
 }
 
 form .yf-error-msg ul {
@@ -237,6 +247,58 @@ form .yf-radio label {
     color: #000000;
 }
 
+.yf-input-btns {
+    margin: auto;
+    width: 40%;
+    height: 50px;
+}
 
+.yf-input-btns input, .yf-input-btns a {
+    display: inline-block;
+    background-color: #06C;
+    float: left;
+    width: 40%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+}
 
+.yf-input-btns a {
+    float: right !important;
+    text-align: center;
+    line-height: 50px;
+}
+
+.yf-input.img-upload {
+    vertical-align: top;
+}
+
+.yf-imgs-container {
+    display: inline-block;
+    width: 800px;
+}
+
+.yf-imgs-container .yf-item-img{
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 165px;
+    height: 165px;
+    border: solid 1px #a6a6a6;
+}
+
+.yf-imgs-container .yf-item-img{
+    float: left;
+}
+
+.yf-imgs-container .yf-item-img {
+    text-align: center;
+    position: relative;
+}
+
+.yf-imgs-container .yf-item-img i {
+    position: absolute;
+    top:40%;
+    left:40%;
+}
 
