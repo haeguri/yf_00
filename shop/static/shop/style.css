@@ -270,35 +270,49 @@ form .yf-radio label {
     line-height: 50px;
 }
 
-.yf-input.img-upload {
+.yf-input.img-upload-area {
     vertical-align: top;
 }
 
-.yf-imgs-container {
+.hidden-img-upload input{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+
+#item-img-container {
     display: inline-block;
     width: 800px;
 }
 
-.yf-imgs-container .yf-item-img{
-    margin-right: 20px;
-    margin-bottom: 20px;
+#item-img-container .item-img-wrapper{
+    position: relative;
+    float: left;
     width: 165px;
     height: 165px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     border: solid 1px #a6a6a6;
-}
-
-.yf-imgs-container .yf-item-img{
-    float: left;
-}
-
-.yf-imgs-container .yf-item-img {
     text-align: center;
-    position: relative;
+    cursor: pointer;
 }
 
-.yf-imgs-container .yf-item-img i {
+#item-img-container .item-img-wrapper i {
     position: absolute;
     top:40%;
     left:40%;
 }
 
+
+#item-img-container .item-img-wrapper img {   /* 추가될 이미지를 감싸는 요소 */
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+}

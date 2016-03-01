@@ -15,20 +15,20 @@
         <div>{{ item_form.vendor }}</div>
 
         {{ item_photo_formset.management_form }}
-        <div class="yf-input img-upload">
+        <div class="yf-input img-upload-area">
 {#            <label>이미지</label>#}
-            <div class="yf-imgs-container">
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
-                <div class="yf-item-img"><i class="fa fa-picture-o fa-2x"></i></div>
+            <div id="item-img-container">
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
+                <div class="item-img-wrapper"><i class="fa fa-picture-o fa-2x"></i></div>
             </div>
             {% for photo_form in item_photo_formset %}
-                <div class="photo-formset">
+                <div class="hidden-img-upload">
                     {{ photo_form.image }}
                 </div>
             {% endfor %}
@@ -125,17 +125,68 @@
     </form>
 </div>
 
-{#<script type="text/javascript">#}
-{#    $("#yf-input-deal_way").change(function() {#}
-{#        var deal_way = $("#yf-input-deal_way option:selected").val();#}
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        var UPLOADED_IMG = 0;
+        var itemImgContainer = $('#item-img-container');
+        var itemImgWrapper = itemImgContainer.find('.item-img-wrapper');
+
+        $('.img-upload-area .hidden-img-upload input').each(function() {
+            $(this).on('change', function() {
+
+                if(window.FileReader){
+                    //image 파일만
+                    if (! $(this)[0].files[0].type.match(/image\//) ) return;
+
+                    var reader = new FileReader();
+                    reader.onload = function(e){
+                        console.log("reader.onload 이벤트가 발생했습니다.");
+
+                        ++UPLOADED_IMG;
+
+                        var src = e.target.result;
+                        var curItemImgWrapper = itemImgContainer.find('div.item-img-wrapper:nth-child(' + UPLOADED_IMG + ')');
+
+                        console.log("curitemImgWrapper", curItemImgWrapper);
+
+                        curItemImgWrapper.find('i').remove();
+                        curItemImgWrapper.append('<img src="'+src+'" class="upload-thumb">');
+                    };
+                    reader.readAsDataURL($(this)[0].files[0]);
+                }
+
+{#                else { // old IE#}
+{#                    $(this)[0].select();#}
+{#                    $(this)[0].blur();#}
+{#                    var imgSrc = document.selection.createRange().text;#}
+{#                    parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');#}
 {##}
-{#        if(deal_way == "ship") {#}
-{#            $(".shipping-checkbox").show();#}
-{#            $(".deal-place").hide();#}
-{#        } else {#}
-{#            $(".shipping-checkbox").hide();#}
-{#            $(".deal-place").show();#}
-{#        }#}
-{#    });#}
-{#</script>#}
+{#                    var img = $(this).siblings('.upload-display').find('img');#}
+{#                    img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";#}
+{#                }#}
+            });
+        });
+
+        itemImgWrapper.each(function () {
+            $(this).click(function(){
+               $('#id_photos_of_item-'+UPLOADED_IMG+'-image').click();
+            });
+        });
+
+        $("#yf-input-deal_way").change(function() {
+            var deal_way = $("#yf-input-deal_way option:selected").val();
+
+            if(deal_way == "ship") {
+                $(".shipping-checkbox").show();
+                $(".deal-place").hide();
+            } else {
+                $(".shipping-checkbox").hide();
+                $(".deal-place").show();
+            }
+        });
+    });
+</script>
+
 {% endblock %}
