@@ -19,17 +19,32 @@
                 </div>
             </div>
             <div class="item-info-area">
-                <h5>{{ item.name }}</h5>
-                <span class="label label-success">{{ item.get_condition_display }}</span>
-                <span class="label label-info">{{ item.get_deal_way_display }}</span>
-                <span class="kor-timesince">{{ item.created_at | get_due_date_string}}</span>
-                <br/>
-                <span class="price"><strong>{{ item.price | intcomma }}원</strong></span>
-                {% if item.deal_way == 'direct' %}
-                    <span class="deal-place">{{ item.deal_place }}</span>
-                {% endif %}
-                <span></span>
+                <div class="top">
+                    <span class="label label-primary">{{ item.get_condition_display }}</span>
+                    <span class="label label-info">{{ item.get_deal_way_display }}</span>
+                    <h5>{{ item.name }}</h5>
+                    {% if item.include_shipping %}
+                        <span class="include-shipping">배송료포함</span>
+                    {% endif %}
+                    <span class="price"><strong>{{ item.price | intcomma }}원</strong></span>
+                    <span class="kor-timesince">{{ item.created_at | get_due_date_string}}</span>
+                </div>
                 <hr/>
+                <div class="middle">
+                    {% if item.deal_way == 'direct' %}
+                        <span class="info-label">거래장소</span>
+                        <p class="info-content">{{ item.deal_place }}</p>
+                    {% endif %}
+{#                    {% if item.deal_way == 'ship' %}#}
+{#                        <span class="info-label">거래장소</span>#}
+{#                        <span class="deal-place">{{ item.deal_place }}</span>#}
+{#                    {% endif %}#}
+                </div>
+                <hr/>
+                <div class="bottom">
+                    <span class="info-label">판매자정보</span>
+                    <p class="info-content"></p>
+                </div>
             </div>
         </div>
         <div class="bottom-info-area">

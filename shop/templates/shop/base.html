@@ -29,11 +29,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'logout' %}">로그아웃</a></li>
                         <li><a href="{% url 'profiles:profile' user.id %}">내정보</a></li>
-    {#                  <li><a href="#">Action</a></li>#}
-    {#                  <li><a href="#">Another action</a></li>#}
-    {#                  <li><a href="#">Something else here</a></li>#}
-    {#                  <li role="separator" class="divider"></li>#}
-    {#                  <li><a href="#">Separated link</a></li>#}
                     </ul>
                 </li>
             {% endif %}
@@ -42,10 +37,22 @@
     </div>
 </nav>
 
-<div class="content container">
+<div class="container">
     {% block content %}
     {% endblock %}
 </div>
+
+<div class="yu-fixed-btn">
+    <a class="yu-circle-btn" href="{% url 'shop:item_new' %}" data-toggle="tooltip" data-placement="top" title="판매하기">
+        <i class="fa fa-plus fa-3x"></i>
+    </a>
+</div>
+
+<script type="text/javascript">
+    (function() {
+        $('a.yu-circle-btn').tooltip();
+    })();
+</script>
 
 </body>
 </html>

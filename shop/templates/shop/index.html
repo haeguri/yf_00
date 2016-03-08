@@ -7,8 +7,6 @@
     <div class="item-list-area">
         {% for item in item_list %}
             <a class="item-card" href="{% url 'shop:item_detail' item.pk %}">
-{#                <div class="img" style="background-image: url('{{ item.photos_of_item.all.0.image.url }}')">#}
-{#                </div>#}
                 <img src="{{ item.photos_of_item.all.0.image.url }}" alt=""/>
                 <div class="item-card-content">
                     <div class="name"> {{ item.name }} </div>
@@ -20,17 +18,5 @@
 {% else %}
     <p>아이템이 없습니다.</p>
 {% endif %}
-
-<div class="yu-fixed-btn">
-    <a class="yu-circle-btn" href="{% url 'shop:item_new' %}" data-toggle="tooltip" data-placement="top" title="판매하기">
-        <i class="fa fa-plus fa-3x"></i>
-    </a>
-</div>
-
-<script type="text/javascript">
-    (function() {
-        $('a.yu-circle-btn').tooltip();
-    })();
-</script>
 
 {% endblock %}
