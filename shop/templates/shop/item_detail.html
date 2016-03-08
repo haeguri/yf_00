@@ -1,42 +1,78 @@
 {% extends "shop/base.html" %}
 {% load humanize %}
-{% load staticfiles %}
+{% load shop_tags %}
 
 {% block content %}
 {% if item %}
-    <div class="item-wrapper">
-        <div class="item-title">
-            <h3 style="display: inline-block;">{{ item.name }}</h3>
-            <span style="float: right">
-                {{ item.created_at|date:"Y m.j  G:i" }}
-            </span>
-        </div>
-        <hr/>
+    <div class="item-detail-container">
+        <div class="middle-info-area">
+            <div class="item-img-area">
+                <div class="item-img-preview">
 
-        <div class="item-info-card">
-            <div>
-                <span>판매자</span><a href="{% url 'profiles:profile' item.vendor.id %}">{{ item.vendor }}</a>
+                </div>
+                <div class="item-imgs">
+
+                </div>
             </div>
-            <div>
-                <span>구매일</span><p>{{ item.purchased_at }}</p>
-            </div>
-            <div>
-                <span>제품상태</span><p>{{ item.condition }}</p>
-            </div>
-            <div>
-                <span>거래방법</span>
-                {% if item.deal_way == "ship" %}
-                    <p>택배</p>
-                {% else %}
-                    <p>직거래</p>
+{#            <div class="vertical-line"></div>#}
+            <div class="item-info-area">
+                <h5>{{ item.name }}</h5>
+                <span class="label label-success">{{ item.get_condition_display }}</span>
+                <span class="label label-info">{{ item.get_deal_way_display }}</span>
+                <span class="kor-timesince">{{ item.created_at | get_due_date_string}}</span>
+                <br/>
+                <span class="price"><strong>{{ item.price | intcomma }}원</strong></span>
+                {% if item.deal_way == 'direct' %}
+                    <span class="deal-place">{{ item.deal_place }}</span>
                 {% endif %}
+                <span></span>
+                <hr/>
             </div>
-            <button class="btn btn-primary">어머, 이건 사야해 ! <img src="{% static 'shop/buy_it.png' %}" alt=""/></button>
         </div>
-        <div class="item-body">
-           <p>{{ item.desc | safe}}</p>
+        <div class="bottom-info-area">
+            <div class="item-desc-area">
+
+            </div>
+            <div class="item-comment-area">
+
+            </div>
         </div>
     </div>
+
+
+{#    <div class="item-info-wrapper">#}
+{#        <div class="item-title">#}
+{#            <h3 style="display: inline-block;">{{ item.name }}</h3>#}
+{#            <span style="float: right">#}
+{#                {{ item.created_at|date:"Y m.j  G:i" }}#}
+{#            </span>#}
+{#        </div>#}
+{#        <hr/>#}
+{##}
+{#        <div class="item-info-card">#}
+{#            <div>#}
+{#                <span>판매자</span><a href="{% url 'profiles:profile' item.vendor.id %}">{{ item.vendor }}</a>#}
+{#            </div>#}
+{#            <div>#}
+{#                <span>구매일</span><p>{{ item.purchased_at }}</p>#}
+{#            </div>#}
+{#            <div>#}
+{#                <span>제품상태</span><p>{{ item.condition }}</p>#}
+{#            </div>#}
+{#            <div>#}
+{#                <span>거래방법</span>#}
+{#                {% if item.deal_way == "ship" %}#}
+{#                    <p>택배</p>#}
+{#                {% else %}#}
+{#                    <p>직거래</p>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <button class="btn btn-primary">어머, 이건 사야해 ! <img src="{% static 'shop/buy_it.png' %}" alt=""/></button>#}
+{#        </div>#}
+{#        <div class="item-body">#}
+{#           <p>{{ item.desc | safe}}</p>#}
+{#        </div>#}
+{#    </div>#}
 
 
 {% else %}

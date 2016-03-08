@@ -43,14 +43,6 @@
         </div>
 
         <div class="yf-input">
-            <label for="{{ item_form.price.id_for_label }}">가격</label>
-            {{ item_form.price }}
-            <div class="yf-error-msg">
-                {{ item_form.price.errors }}
-            </div>
-        </div>
-
-        <div class="yf-input">
             <label for="{{ item_form.purchased_at.id_for_label }}">구매시기</label>
             {{ item_form.purchased_at }}
             <div class="yf-error-msg">
@@ -58,10 +50,10 @@
             </div>
         </div>
 
-        <div class="yf-input">
+        <div class="yf-input deal-way">
             <label for="{{ item_form.deal_way.id_for_label }}">거래방법</label>
             {% for radio in item_form.deal_way %}
-                <div class="yf-radio">
+                <div class="radio-btn">
                     {{ radio }}
                 </div>
             {% endfor %}
@@ -70,10 +62,10 @@
             </div>
         </div>
 
-        <div class="yf-input">
+        <div class="yf-input condition">
             <label for="{{ item_form.condition.id_for_label }}">옷 상태</label>
             {% for radio in item_form.condition %}
-                <div class="yf-radio">
+                <div class="radio-btn">
                     {{ radio }}
                 </div>
             {% endfor %}
@@ -82,7 +74,7 @@
             </div>
         </div>
 
-        <div class="yf-input">
+        <div class="yf-input deal-place">
             <label for="{{ item_form.deal_place.id_for_label }}">거래장소</label>
             {{ item_form.deal_place }}
             <div class="yf-error-msg">
@@ -90,7 +82,15 @@
             </div>
         </div>
 
-        <div class="yf-input">
+        <div class="yf-input price">
+            <label for="{{ item_form.price.id_for_label }}">가격</label>
+            {{ item_form.price }}
+            <div class="yf-error-msg">
+                {{ item_form.price.errors }}
+            </div>
+        </div>
+
+        <div class="yf-input shipping-price">
             <label for="{{ item_form.shipping_price.id_for_label }}">배송비</label>
             {{ item_form.shipping_price }}
             <div class="yf-error-msg">
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <div class="yf-input">
+        <div class="yf-input include_shipping">
             <label for="{{ item_form.include_shipping.id_for_label }}">배송비포함</label>
             {{ item_form.include_shipping }}
             <div class="yf-error-msg">
@@ -127,66 +127,68 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function(){
+    (function() {
+        $(document).ready(function(){
 
-        var UPLOADED_IMG = 0;
-        var itemImgContainer = $('#item-img-container');
-        var itemImgWrapper = itemImgContainer.find('.item-img-wrapper');
+            var UPLOADED_IMG = 0;
+            var itemImgContainer = $('#item-img-container');
+            var itemImgWrapper = itemImgContainer.find('.item-img-wrapper');
 
-        $('.img-upload-area .hidden-img-upload input').each(function() {
-            $(this).on('change', function() {
+            $('.img-upload-area .hidden-img-upload input').each(function() {
+                $(this).on('change', function() {
 
-                if(window.FileReader){
-                    //image 파일만
-                    if (! $(this)[0].files[0].type.match(/image\//) ) return;
+                    if(window.FileReader){
+                        //image 파일만
+                        if (! $(this)[0].files[0].type.match(/image\//) ) return;
 
-                    var reader = new FileReader();
-                    reader.onload = function(e){
-                        console.log("reader.onload 이벤트가 발생했습니다.");
+                        var reader = new FileReader();
+                        reader.onload = function(e){
+                            console.log("reader.onload 이벤트가 발생했습니다.");
 
-                        ++UPLOADED_IMG;
+                            var src = e.target.result;
+                            var curItemImgWrapper = itemImgContainer.find('div.item-img-wrapper:nth-child(' + (++UPLOADED_IMG) + ')');
 
-                        var src = e.target.result;
-                        var curItemImgWrapper = itemImgContainer.find('div.item-img-wrapper:nth-child(' + UPLOADED_IMG + ')');
+                            console.log("curitemImgWrapper", curItemImgWrapper);
 
-                        console.log("curitemImgWrapper", curItemImgWrapper);
+                            curItemImgWrapper.find('i').remove();
+                            curItemImgWrapper.append('<img src="'+src+'" class="upload-thumb">');
+                        };
+                        reader.readAsDataURL($(this)[0].files[0]);
+                    }
 
-                        curItemImgWrapper.find('i').remove();
-                        curItemImgWrapper.append('<img src="'+src+'" class="upload-thumb">');
-                    };
-                    reader.readAsDataURL($(this)[0].files[0]);
+                    {#                else { // old IE#}
+                    {#                    console.log("주석??");#}
+                    {#                    $(this)[0].select();#}
+                    {#                    $(this)[0].blur();#}
+                    {#                    var imgSrc = document.selection.createRange().text;#}
+                    {#                    parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');#}
+                    {##}
+                    {#                    var img = $(this).siblings('.upload-display').find('img');#}
+                    {#                    img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";#}
+                    {#                }#}
+                });
+            });
+
+            itemImgWrapper.each(function () {
+                $(this).click(function(){
+                    $('#id_photos_of_item-'+UPLOADED_IMG+'-image').click();
+                });
+            });
+
+            $(".yf-input.deal-way").change(function() {
+                {#            var deal_way = $("#yf-input-deal_way option:selected").val();#}
+                var deal_way = $(this).find(".radio-btn input:checked").val();
+
+                if(deal_way == "ship") {
+                    $(".yf-input.shipping-checkbox").show();
+                    $(".yf-input.deal-place").hide();
+                } else {
+                    $(".yf-input.shipping-checkbox").hide();
+                    $(".yf-input.deal-place").show();
                 }
-
-{#                else { // old IE#}
-{#                    $(this)[0].select();#}
-{#                    $(this)[0].blur();#}
-{#                    var imgSrc = document.selection.createRange().text;#}
-{#                    parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');#}
-{##}
-{#                    var img = $(this).siblings('.upload-display').find('img');#}
-{#                    img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";#}
-{#                }#}
             });
         });
-
-        itemImgWrapper.each(function () {
-            $(this).click(function(){
-               $('#id_photos_of_item-'+UPLOADED_IMG+'-image').click();
-            });
-        });
-
-        $("#yf-input-deal_way").change(function() {
-            var deal_way = $("#yf-input-deal_way option:selected").val();
-
-            if(deal_way == "ship") {
-                $(".shipping-checkbox").show();
-                $(".deal-place").hide();
-            } else {
-                $(".shipping-checkbox").hide();
-                $(".deal-place").show();
-            }
-        });
-    });
+    })();
 </script>
 
 {% endblock %}

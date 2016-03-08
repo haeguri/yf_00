@@ -34,13 +34,17 @@ class ItemForm(forms.ModelForm):
 
     condition = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=CONDITION_OF_ITEM)
 
+    price = forms.CharField( widget= forms.TextInput(attrs={'type':'number', 'min':0, 'step':1}))
+
+    shipping_price = forms.CharField( widget= forms.TextInput(attrs={'type':'number', 'min':0}))
+
     def __init__(self, *args, **kwargs):
         super(ItemForm, self).__init__(*args, **kwargs)
 
         for field in self.fields.values():
             field.error_messages = {
-                'required': '*입력된 값이 없습니다.',
-                'invalid': '*잘못된 입력값 입니다.'
+                'required': '*입력된 정보가 없습니다.',
+                'invalid': '*잘못된 정보입니다. 다시 입력해주세요.'
             }
 
     class Meta:

@@ -30,7 +30,6 @@ class Category(models.Model):
 class ItemManager(models.Manager):
     pass
 
-
 class Item(models.Model):
 
     vendor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='판매자')
@@ -38,19 +37,11 @@ class Item(models.Model):
     name = models.CharField('이름', max_length=200)
     created_at = models.DateTimeField('등록일', auto_now_add=True)
     updated_at = models.DateTimeField('수정일', auto_now=True)
-    price = models.CommaSeparatedIntegerField(max_length=10, default=10000)
-    purchased_at = models.CharField('구입일', max_length=10)
-    deal_way = models.CharField('거래방법', max_length=6,
-                                choices=WAY_OF_DEAL,
-                                default='direct')
-    # desc = models.TextField(max_length=1000)
-    condition = models.CharField('물품상태', max_length=1,
-                                 choices=CONDITION_OF_ITEM,
-                                 default='B')
-    deal_place = models.CharField('거래장소', max_length=10,
-                                  null=True, blank=True)
-    shipping_price = models.CharField('배송료', max_length=10,
-                                      null=True, blank=True)
+    price = models.CommaSeparatedIntegerField('판매가', max_length=10, default=10000)
+    deal_way = models.CharField('거래방법', max_length=6, choices=WAY_OF_DEAL, default='direct', null=False, blank=False)
+    condition = models.CharField('물품상태', max_length=1, choices=CONDITION_OF_ITEM, default='B', null=False, blank=False)
+    deal_place = models.CharField('거래장소', max_length=10, null=True, blank=True)
+    shipping_price = models.CommaSeparatedIntegerField('배송료', max_length=10, null=True, blank=True)
     include_shipping = models.BooleanField('배송료포함', default=False, blank=True)
     desc = models.TextField(null = False, max_length=1000)
 
@@ -70,6 +61,9 @@ class ItemPhoto(models.Model):
     def delete(self, *args, **kwargs):
         self.image.delete()
         super(ItemPhoto, self).delete(*args, **kwargs)
+
+class Comment(models.Model):
+    body = models.CharField('코멘트', max_length=100)
 
 
 class CustomUserManager(BaseUserManager):

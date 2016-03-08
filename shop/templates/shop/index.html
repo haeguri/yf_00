@@ -21,9 +21,15 @@
 {% endif %}
 
 <div class="yu-fixed-btn">
-    <a class="yu-circle-btn" href="{% url 'shop:item_new' %}">
+    <a class="yu-circle-btn" href="{% url 'shop:item_new' %}" data-toggle="tooltip" data-placement="top" title="판매하기">
         <i class="fa fa-plus fa-3x"></i>
     </a>
 </div>
+
+<script type="text/javascript">
+    (function() {
+        $('a.yu-circle-btn').tooltip();
+    })();
+</script>
 
 {% endblock %}
