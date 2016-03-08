@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 /*body { font-family: "Nanum Gothic", serif; }*/
-html, body { height:100%; background-color: #f9f9f9; }
+html, body { height:100%; background-color: #e3e3e3; }
 
 div.content.container { min-height: 100%; }
 
@@ -32,42 +32,55 @@ input {
     outline: none;
 }
 
-.content.container { background-color: #f9f9f9; }
+.container {
+    width: 900px;
+}
+
+.content.container {  }
 
 .navbar-default { background-color: #ffffff; border-bottom: solid 2px #B6B6B6; }
 
 a.navbar-brand strong { font-size: 20px; color: #06C; }
 
 
-.yu-item {
+.item-card {
     color: inherit;
-    background-color: #ececec;
-    width: 23%;
-    height: 320px;
+    background-color: #fff;
+    width: 210px;
+    height: 280px;
     margin: 1% 1% 0 1%;
     float: left;
+    border-radius: 10px;
 }
 
-.yu-item .yu-thumb-img {
+.item-card img {
     background-position: center top;
     -webkit-background-size: cover;
     background-size: cover;
     width: 100%;
-    height: 250px;
+    height: 210px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.yu-item .yu-thumb-content {
-    padding: 3%;
+.item-card .item-card-content {
+    border-top: solid 1px #B6B6B6;
+    padding: 10px;
 }
 
-.yu-item .yu-thumb-price {
+.item-card-content .name {
+    font-size: 13px;
+    overflow: hidden;
+}
+
+.item-card-content .price {
     font-size: 12px;
     font-weight: 700;
+    margin-top: 8px;
 }
 
-.yu-won {
-    font-size: 10px;
-    margin-left: 2px;
+.won {
+    margin-left: 1px;
 }
 
 .yu-fixed-btn {
@@ -347,7 +360,7 @@ form .yf-input.desc *{
 .item-detail-container .middle-info-area {
     position: relative;
     /*background-color: #fff;*/
-    height: 400px;
+    height: 450px;
     margin-bottom: 10px;
 }
 
@@ -362,18 +375,41 @@ form .yf-input.desc *{
     border: 1px solid #e6e6e6;
     padding: 10px;
     float: left;
-    width: 59%;
+    width: 65%;
     height: 100%;
 }
 
 .item-img-area .item-img-preview {
-    height: 350px;
-    width: 350px;
+    display: inline-block;
+    height: 420px;
+    width: 420px;
     background-color: #cccccc;
+
+}
+
+.item-img-preview img {
+    width: 100%;
+    height: 100%;
 }
 
 .item-img-area .item-imgs {
+    width: 56px;
+    height: 420px;
+    float: right;
+}
 
+.item-img-area .item-imgs .img-box {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 5px;
+    background-color: #e2e2e2;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.img-box img {
+    width: 100%;
+    height: 100%;
 }
 
 .middle-info-area .item-info-area {
@@ -382,7 +418,7 @@ form .yf-input.desc *{
     border: 1px solid #e6e6e6;
     padding: 10px;
     float: left;
-    width: 39%;
+    width: 33.5%;
     height: 100%;
 }
 
@@ -396,9 +432,8 @@ form .yf-input.desc *{
     height: 97%;
 }
 
-
-
 .kor-timesince {
     float: right;
     letter-spacing: 0;
 }
+

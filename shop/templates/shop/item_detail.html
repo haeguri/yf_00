@@ -8,13 +8,16 @@
         <div class="middle-info-area">
             <div class="item-img-area">
                 <div class="item-img-preview">
-
+                    <img src="" alt=""/>
                 </div>
                 <div class="item-imgs">
-
+                {% for photo in item.photos_of_item.all %}
+                    <div class="img-box">
+                        <img src="{{ photo.image.url }}"/>
+                    </div>
+                {% endfor %}
                 </div>
             </div>
-{#            <div class="vertical-line"></div>#}
             <div class="item-info-area">
                 <h5>{{ item.name }}</h5>
                 <span class="label label-success">{{ item.get_condition_display }}</span>
@@ -38,45 +41,24 @@
             </div>
         </div>
     </div>
-
-
-{#    <div class="item-info-wrapper">#}
-{#        <div class="item-title">#}
-{#            <h3 style="display: inline-block;">{{ item.name }}</h3>#}
-{#            <span style="float: right">#}
-{#                {{ item.created_at|date:"Y m.j  G:i" }}#}
-{#            </span>#}
-{#        </div>#}
-{#        <hr/>#}
-{##}
-{#        <div class="item-info-card">#}
-{#            <div>#}
-{#                <span>판매자</span><a href="{% url 'profiles:profile' item.vendor.id %}">{{ item.vendor }}</a>#}
-{#            </div>#}
-{#            <div>#}
-{#                <span>구매일</span><p>{{ item.purchased_at }}</p>#}
-{#            </div>#}
-{#            <div>#}
-{#                <span>제품상태</span><p>{{ item.condition }}</p>#}
-{#            </div>#}
-{#            <div>#}
-{#                <span>거래방법</span>#}
-{#                {% if item.deal_way == "ship" %}#}
-{#                    <p>택배</p>#}
-{#                {% else %}#}
-{#                    <p>직거래</p>#}
-{#                {% endif %}#}
-{#            </div>#}
-{#            <button class="btn btn-primary">어머, 이건 사야해 ! <img src="{% static 'shop/buy_it.png' %}" alt=""/></button>#}
-{#        </div>#}
-{#        <div class="item-body">#}
-{#           <p>{{ item.desc | safe}}</p>#}
-{#        </div>#}
-{#    </div>#}
-
-
 {% else %}
-    <p>아이템이 없습니다.</p>
+    <p>존재하지 않는 아이템입니다.</p>
 {% endif %}
+
+<script type="text/javascript">
+    (function() {
+        $(document).ready(function() {
+            var selectedItemImg = $('.item-img-preview img');
+            var imgSrc = $('.item-imgs > .img-box img').attr('src');
+
+            selectedItemImg.attr('src', imgSrc);
+
+            $('.item-imgs .img-box').click(function() {
+                var imgSrc = $(this).find('img').attr('src');
+                selectedItemImg.attr('src', imgSrc);
+            });
+        });
+    })();
+</script>
 
 {% endblock %}

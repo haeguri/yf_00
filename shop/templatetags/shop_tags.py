@@ -31,4 +31,7 @@ def get_due_date_string(value):
 
     time_str = '%(time)s 전' % {'time': ''.join(timesince(value).split(' ')[0].split())}
 
-    return time_str.lstrip().replace('days','일').replace('hours', '시간').replace('week', '주').replace(",", "")
+    return time_str.lstrip()\
+        .replace('month', '달')\
+        .replace('week', '주')\
+        .replace('days','일').replace('hours', '시간').replace('minutes', '분').replace(",", "")

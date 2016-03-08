@@ -4,14 +4,15 @@
 {% block content %}
 
 {% if item_list %}
-    <div class="yu-item-list">
+    <div class="item-list-area">
         {% for item in item_list %}
-            <a class="yu-item" href="{% url 'shop:item_detail' item.pk %}">
-                <div class="yu-thumb-img" style="background-image: url('{{ item.photos_of_item.all.0.image.url }}')">
-                </div>
-                <div class="yu-thumb-content">
-                    <span class="yu-thumb-name"> {{ item.name }} </span> <br/>
-                    <span class="yu-thumb-price">{{ item.price | intcomma }}<span class="yu-won">원</span></span>
+            <a class="item-card" href="{% url 'shop:item_detail' item.pk %}">
+{#                <div class="img" style="background-image: url('{{ item.photos_of_item.all.0.image.url }}')">#}
+{#                </div>#}
+                <img src="{{ item.photos_of_item.all.0.image.url }}" alt=""/>
+                <div class="item-card-content">
+                    <div class="name"> {{ item.name }} </div>
+                    <div class="price">{{ item.price | intcomma }}<span class="won">원</span></div>
                 </div>
             </a>
         {% endfor %}
