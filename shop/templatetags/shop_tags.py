@@ -21,6 +21,6 @@ def get_due_date_string(value):
     return time_str.lstrip()\
         .replace('months', '달').replace('month', '달')\
         .replace('weeks', '주').replace('week', '주')\
-        .replace('days','일').replace('days', '일')\
+        .replace('days','일').replace('day', '일')\
         .replace('hours', '시간').replace('hour', '시간')\
         .replace('minutes', '분').replace('minute', '분').replace(",", "")

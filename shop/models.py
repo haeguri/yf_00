@@ -8,7 +8,7 @@ from django_summernote import models as summer_models
 from django_summernote import fields as summer_fields
 
 CONDITION_OF_ITEM = (
-    ('S', '박스 미개봉'),
+    ('S', '아직 미개봉'),
     ('A', '거의 새것'),
     ('B', '사용감 있음'),
     ('C', '오래됨'),
@@ -17,8 +17,12 @@ CONDITION_OF_ITEM = (
 WAY_OF_DEAL = (
     ('direct', '직거래'),
     ('ship', '택배'),
-    ('delivery', '직접배달')
 )
+
+STATE_OF_ITEM = {
+    ('sold', '판매완료'),
+    ('sale', '판매중'),
+}
 
 class Category(models.Model):
     name = models.CharField('카테고리 이름', max_length=100)
@@ -34,16 +38,17 @@ class Item(models.Model):
 
     vendor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='판매자')
     category = models.ForeignKey(Category, verbose_name='카테고리')
-    name = models.CharField('이름', max_length=200)
     created_at = models.DateTimeField('등록일', auto_now_add=True)
     updated_at = models.DateTimeField('수정일', auto_now=True)
-    price = models.CommaSeparatedIntegerField('판매가', max_length=10, default=10000)
+    name = models.CharField('이름', max_length=200)
+    deal_place = models.CharField('거래장소', max_length=10, null=True, blank=True)
+    include_shipping = models.BooleanField('배송료포함', default=False, blank=True)
     deal_way = models.CharField('거래방법', max_length=6, choices=WAY_OF_DEAL, default='direct', null=False, blank=False)
     condition = models.CharField('물품상태', max_length=1, choices=CONDITION_OF_ITEM, default='B', null=False, blank=False)
-    deal_place = models.CharField('거래장소', max_length=10, null=True, blank=True)
-    shipping_price = models.CommaSeparatedIntegerField('배송료', max_length=10, null=True, blank=True)
-    include_shipping = models.BooleanField('배송료포함', default=False, blank=True)
-    desc = models.TextField(null = False, max_length=1000)
+    desc = models.TextField('설명', null = False, max_length=1000)
+    price = models.CommaSeparatedIntegerField('판매가', max_length=10, default=10000)
+    # shipping_price = models.CommaSeparatedIntegerField('배송료', max_length=10, null=True, blank=True)
+    state = models.CharField('판매여부', max_length=4, choices=STATE_OF_ITEM, default='sale', null=False, blank=False)
 
     objects = ItemManager()
 
@@ -62,8 +67,12 @@ class ItemPhoto(models.Model):
         self.image.delete()
         super(ItemPhoto, self).delete(*args, **kwargs)
 
-class Comment(models.Model):
-    body = models.CharField('코멘트', max_length=100)
+class ItemComment(models.Model):
+    body = models.CharField('코멘트', max_length=300)
+    created_at = models.DateTimeField('등록일', auto_now_add=True)
+    updated_at = models.DateTimeField('수정일', auto_now=True)
+    item = models.ForeignKey(Item, related_name='comments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments')
 
 
 class CustomUserManager(BaseUserManager):
@@ -106,17 +115,15 @@ class CustomUser(AbstractBaseUser):
 
     nickname = models.CharField('별명', max_length=20, unique=True)
 
-    LEVEL_OF_CREDIBILITY = (
-        ('god', '신'),
-        ('platinum', '플래티넘'),
-        ('gold', '골드'),
-        ('silver', '실버'),
-        ('bronze', '브론즈'),
+    STATES_OF_CREDIBILITY = (
+        ('vendor', '거상'),
+        ('pro', '프로'),
+        ('newbie', '뉴비'),
     )
 
     credibility = models.CharField(max_length=10,
-                                   choices=LEVEL_OF_CREDIBILITY,
-                                   default='bronze')
+                                   choices=STATES_OF_CREDIBILITY,
+                                   default='newbie')
 
     joined_at = models.DateTimeField('가입일', auto_now_add=True)
 

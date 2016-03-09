@@ -36,7 +36,7 @@ class ItemForm(forms.ModelForm):
 
     price = forms.CharField( widget= forms.TextInput(attrs={'type':'number', 'min':0, 'step':1}))
 
-    shipping_price = forms.CharField( widget= forms.TextInput(attrs={'type':'number', 'min':0}))
+    # shipping_price = forms.CharField( widget= forms.TextInput(attrs={'type':'number', 'min':0}))
 
     def __init__(self, *args, **kwargs):
         super(ItemForm, self).__init__(*args, **kwargs)
