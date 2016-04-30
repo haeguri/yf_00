@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'shop',
     'profiles',
     'django_summernote',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (

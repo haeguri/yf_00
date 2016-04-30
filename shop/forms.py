@@ -30,11 +30,13 @@ class ItemForm(forms.ModelForm):
     vendor = forms.ModelChoiceField(widget=forms.HiddenInput(),
                                     queryset=User.objects.all())
 
+    state = forms.CharField(widget=forms.HiddenInput())
+
     deal_way = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=WAY_OF_DEAL)
 
     condition = forms.ChoiceField(required=True, widget=forms.RadioSelect, choices=CONDITION_OF_ITEM)
 
-    price = forms.CharField( widget= forms.TextInput(attrs={'type':'number', 'min':0, 'step':1}))
+    price = forms.CharField( widget= forms.TextInput(attrs={'type':'text',  'maxlength':'10', 'pattern': '\d*'},))
 
     # shipping_price = forms.CharField( widget= forms.TextInput(attrs={'type':'number', 'min':0}))
 

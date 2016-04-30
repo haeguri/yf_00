@@ -47,7 +47,6 @@ class Item(models.Model):
     condition = models.CharField('물품상태', max_length=1, choices=CONDITION_OF_ITEM, default='B', null=False, blank=False)
     desc = models.TextField('설명', null = False, max_length=1000)
     price = models.CommaSeparatedIntegerField('판매가', max_length=10, default=10000)
-    # shipping_price = models.CommaSeparatedIntegerField('배송료', max_length=10, null=True, blank=True)
     state = models.CharField('판매여부', max_length=4, choices=STATE_OF_ITEM, default='sale', null=False, blank=False)
 
     objects = ItemManager()

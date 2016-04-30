@@ -32,15 +32,18 @@
                     </ul>
                 </li>
             {% endif %}
-
         </ul>
     </div>
 </nav>
 
-<div class="container">
+<div class="main container">
     {% block content %}
     {% endblock %}
 </div>
+
+<footer>
+
+</footer>
 
 <div class="yu-fixed-btn">
     <a class="yu-circle-btn" href="{% url 'shop:item_new' %}" data-toggle="tooltip" data-placement="top" title="판매하기">

@@ -22,6 +22,9 @@
                 <div class="top">
                     <span class="label label-primary">{{ item.get_condition_display }}</span>
                     <span class="label label-info">{{ item.get_deal_way_display }}</span>
+                    {% if item.vendor.id == user.id %}
+                        <a style="color:red" href="{% url 'shop:item_edit' item.id %}">수정하기</a>
+                    {% endif %}
                     <h5>{{ item.name }}</h5>
                     {% if item.include_shipping %}
                         <span class="include-shipping">배송료포함</span>
@@ -35,24 +38,31 @@
                         <span class="info-label">거래장소</span>
                         <p class="info-content">{{ item.deal_place }}</p>
                     {% endif %}
-{#                    {% if item.deal_way == 'ship' %}#}
-{#                        <span class="info-label">거래장소</span>#}
-{#                        <span class="deal-place">{{ item.deal_place }}</span>#}
-{#                    {% endif %}#}
                 </div>
                 <hr/>
                 <div class="bottom">
                     <span class="info-label">판매자정보</span>
-                    <p class="info-content">{{ user.get_nickname }}</p>
+                    <p class="info-content">{{ item.vendor.get_nickname }}</p>
                 </div>
             </div>
         </div>
         <div class="bottom-info-area">
             <div class="item-desc-area">
-
+                <div class="info-label">제품설명</div>
+                {{ item.desc }}
             </div>
+            <hr/>
             <div class="item-comment-area">
-
+                <form action="{% url 'shop:comment' %}" method="post" id="comment-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" id="item" name="item" value="{{ item.id }}"/>
+                    <input type="hidden" id="user" name="user" value="{{ user.id }}"/>
+                    <textarea name="body" id="comment" rows="10"></textarea>
+                    <input type="submit" value="댓글등록"/>
+                </form>
+            </div>
+            <div id="comment-list">
+                {% include 'shop/comment.html' %}
             </div>
         </div>
     </div>
@@ -65,6 +75,7 @@
         $(document).ready(function() {
             var selectedItemImg = $('.item-img-preview img');
             var imgSrc = $('.item-imgs > .img-box img').attr('src');
+            var csrftoken = getCookie('csrftoken');
 
             selectedItemImg.attr('src', imgSrc);
 
@@ -72,6 +83,83 @@
                 var imgSrc = $(this).find('img').attr('src');
                 selectedItemImg.attr('src', imgSrc);
             });
+
+            $('#comment-form').on('submit', function(event) {
+                event.preventDefault();
+                console.log("form submitted");
+                comment_new();
+            });
+
+            addListener();
+
+            function delete_comment(fromBtn) {
+                $.ajax({
+                    url:'/shop/comment',
+                    type:'POST',
+                    data:{
+                        comment:$(fromBtn).find('.comment_id').val(),
+                        csrfmiddlewaretoken:csrftoken
+                    },
+                    success:function(response) {
+                        console.log("Delete Success!");
+                        $("#comment_"+$(fromBtn).find('.comment_id').val()).remove();
+                        console.log(response);
+                    },
+                    error:function(response, err) {
+                        console.log("Delete Error");
+                        console.log(response);
+                    }
+
+                })
+            }
+
+
+            function comment_new(){
+                console.log("new comment!");
+                $.ajax({
+                    url:'/shop/comment',
+                    type:'post',
+                    data:{
+                        item:$('#item').val(),
+                        user:$('#user').val(),
+                        body:$('#comment').val(),
+                        csrfmiddlewaretoken:$('input[name="csrfmiddlewaretoken"]').val()
+                    },
+                    success:function(response) {
+                        $('#comment').val('');
+                        $('#comment-list').prepend(response.comment)
+                        console.log("Success!");
+                        console.log(response);
+                        addListener();
+                    },
+                    error:function(response, err) {
+                        console.log("Error");
+                        console.log(response);
+                    }
+                })
+            }
+
+            function addListener() {
+                $('.del-comment-btn').on('click', function(event) {
+                    delete_comment(this);
+                });
+            }
+
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
         });
     })();
 </script>

@@ -1,0 +1,38 @@
+{% load shop_tags %}
+
+{% if item.comments.all %}
+    {% for comment in item.comments.all %}
+    <div class="comment" id="comment_{{ comment.id }}">
+        <b><span>{{ comment.user.nickname }}</span></b>  <span>{{ comment.created_at | get_due_date_string }}</span>
+        {% if comment.user.id == user.id %}
+            <span style="float: right;">
+                <button class="del-comment-btn">X
+                <input class="comment_id" type="hidden" value="{{ comment.id }}"/>
+                <input class="comment_uid" type="hidden" value="{{ comment.user.id }}" />
+                </button>
+            </span>
+        {% else %}
+            <br/>
+        {% endif %}
+        <p>{{ comment.body }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    {% for comment in item_comment %}
+    <div class="comment" id="comment_{{ comment.id }}">
+        <b><span>{{ comment.user.nickname }}</span></b>  <span>{{ comment.created_at | get_due_date_string }}</span>
+
+        {% if comment.user.id == user.id %}
+            <span style="float: right;">
+                <button class="del-comment-btn">X
+                <input class="comment_id" type="hidden" value="{{ comment.id }}"/>
+                <input class="comment_uid" type="hidden" value="{{ comment.user.id }}" />
+                </button>
+            </span>
+        {% else %}
+            <br/>
+        {% endif %}
+        <p>{{ comment.body }}</p>
+    </div>
+    {% endfor %}
+{% endif %}
