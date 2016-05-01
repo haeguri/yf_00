@@ -158,7 +158,6 @@
             });
 
             $(".yf-input.deal-way").change(function() {
-                {#            var deal_way = $("#yf-input-deal_way option:selected").val();#}
                 var deal_way = $(this).find(".radio-btn input:checked").val();
 
                 if(deal_way == "ship") {
